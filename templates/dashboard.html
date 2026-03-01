@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+
+    <!-- Submit Paragraph -->
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="mb-3">Submit Paragraphs</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    <textarea name="text"
+                              class="form-control mb-3"
+                              rows="6"
+                              placeholder="Enter paragraphs separated by double newline..."></textarea>
+                    <button class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Word -->
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="mb-3">Search Word</h5>
+                <form method="get" action="/search/">
+                    <input type="text"
+                           name="word"
+                           class="form-control mb-3"
+                           placeholder="Enter word to search">
+                    <button class="btn btn-warning">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<hr class="my-4">
+
+<!-- Word Frequency Table -->
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h5>Word Frequencies</h5>
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>Word</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for word in words %}
+                <tr>
+                    <td>{{ word.word }}</td>
+                    <td>{{ word.count }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2">No data available</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
